@@ -1,9 +1,9 @@
 document.addEventListener('keypress', onKeyPress)
 
-const track1 = {sounds:[], timeOfStart: 0};
-const track2 = {sounds:[], timeOfStart: 0};
-const track3 = {sounds:[], timeOfStart: 0};
-const track4 = {sounds:[], timeOfStart: 0};
+const track1 = {sounds:[], timeOfStart: 0, isSelected: false};
+const track2 = {sounds:[], timeOfStart: 0, isSelected: false};
+const track3 = {sounds:[], timeOfStart: 0, isSelected: false};
+const track4 = {sounds:[], timeOfStart: 0, isSelected: false};
 
 let currentTrack = {sounds:[], timeOfStart: 0};
 
@@ -16,6 +16,13 @@ const delete1Btn = document.getElementById('delete1');
 const delete2Btn = document.getElementById('delete2');
 const delete3Btn = document.getElementById('delete3');
 const delete4Btn = document.getElementById('delete4');
+
+const checkbox1 = document.getElementById('check1');
+const checkbox2 = document.getElementById('check2');
+const checkbox3 = document.getElementById('check3');
+const checkbox4 = document.getElementById('check4');
+
+const playAllBtn = document.getElementById('play-all');
 
 const KeyToSound = {
     'a': document.querySelector('#s1'),
@@ -36,7 +43,6 @@ function onKeyPress(event) {
         var currentSound = {sound: soundKey, 
         duration: Date.now() - currentTrack.timeOfStart}
         currentTrack.sounds.push(currentSound);
-        console.log(currentTrack);
     }
     playSound(soundKey)
 }
@@ -51,10 +57,17 @@ track2Btn.onclick = function(){startTrack(track2, "track2")};
 track3Btn.onclick = function(){startTrack(track3, "track3")};
 track4Btn.onclick = function(){startTrack(track4, "track4")};
 
+checkbox1.onchange = function(){track1.isSelected = !track1.isSelected};
+checkbox2.onchange = function(){track2.isSelected = !track2.isSelected};
+checkbox3.onchange = function(){track3.isSelected = !track3.isSelected};
+checkbox4.onchange = function(){track4.isSelected = !track4.isSelected};
+
 delete1Btn.onclick = function(){deleteTrack(track1)};
 delete2Btn.onclick = function(){deleteTrack(track2)};
 delete3Btn.onclick = function(){deleteTrack(track3)};
 delete4Btn.onclick = function(){deleteTrack(track4)};
+
+playAllBtn.onclick = function(){playAllSelected([track1, track2, track3, track4])}
 
 function startTrack(track, idName){
     console.log(track)
@@ -85,10 +98,18 @@ function startTrack(track, idName){
         track.timeOfStart = currentTrack.timeOfStart;
         currentTrack = {sounds:[], timeOfStart: Date.now()};
     }
-    
 }
 
 function deleteTrack(track){
     track.sounds = [];
     track.timeOfStart = 0;
+}
+
+function playAllSelected(tracks){
+    for(let i = 0; i < tracks.length; i++){
+        if(tracks[i].isSelected)
+        {
+            startTrack(tracks[i], ("track" + [i + 1]))
+        }
+    }
 }
