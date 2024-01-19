@@ -46,7 +46,7 @@ function onKeyPress(event) {
   const soundKey = KeyToSound[event.key];
 
   if (currentTrack.timeOfStart != 0) {
-    var currentSound = {
+    let currentSound = {
       sound: soundKey,
       duration: Date.now() - currentTrack.timeOfStart,
     };
@@ -171,7 +171,7 @@ function toggleMetronome() {
   }
 }
 
-bpmInput.addEventListener('input', updateBPM);
-toggleMetronomeBtn.addEventListener('click', toggleMetronome);
+bpmInput.addEventListener("input", updateBPM);
+toggleMetronomeBtn.addEventListener("click", toggleMetronome);
 
-document.addEventListener('DOMContentLoaded', playMetronome);
+document.addEventListener("DOMContentLoaded", playMetronome);
